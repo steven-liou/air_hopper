@@ -2,6 +2,7 @@ import React, {Component, useState, useReducer, useEffect} from 'react';
 import './App.css';
 import Table from './components/Table';
 import Paginator from './components/Paginator';
+import Select from './components/Select';
 
 import data from './data';
 import pageReducer from './reducers/pageReducer';
@@ -42,31 +43,37 @@ const App = () => {
     return value.toUpperCase();
   };
 
-  const onlyUnique = (value, index, self) => self.indexOf(value) === index;
-  const airlines = filteredState.data.map((row) => row.airline).filter(onlyUnique);
-  airlines.unshift('All');
+  const handleSelect = (property, keys, setter) => {
+    return (e) => {
+      if (e.target.value === 'All') {
+        filterRowsDispatch({type: 'ALL', payload: property});
+      } else {
+        filterRowsDispatch({
+          type: 'FILTER',
+          payload: {
+            property,
+            keys,
+            value: e.target.value,
+          },
+        });
+      }
+      setter(e.target.value);
+    };
+  };
 
-  const handleChange = (e) => {
-    const property = e.target.name;
-    if (e.target.value === 'All') {
-      filterRowsDispatch({type: 'ALL', payload: property});
-    } else {
-      filterRowsDispatch({
-        type: 'FILTER',
-        payload: {
-          property,
-          value: e.target.value,
-        },
-      });
-    }
-    setSelected(e.target.value);
+  const clearFilter = (e) => {
+    e.preventDefault();
+    filterRowsDispatch({type: 'CLEAR'});
+    setAirline('All');
+    setAirport('All');
   };
 
   useEffect(() => {
     pageDispatch({type: 'SET_TOTAL_ROWS', payload: filteredRows.length});
   }, [filteredRows]);
 
-  const [selected, setSelected] = useState('All');
+  const [airline, setAirline] = useState('All');
+  const [airport, setAirport] = useState('All');
 
   return (
     <div className='app'>
@@ -75,20 +82,23 @@ const App = () => {
       </header>
       <section>
         <form>
-          <label htmlFor='airlines'>Show routes on</label>
-          <select id='airline' name='airline' onChange={handleChange}>
-            {airlines.map((airline, index) => {
-              return (
-                <option
-                  key={index}
-                  value={airline}
-                  disabled={selected === 'All' || airline === 'All' ? false : airline !== selected}
-                >
-                  {airline}
-                </option>
-              );
-            })}
-          </select>
+          <Select
+            options={routeRows}
+            valueKeys={['airline']}
+            titleKey='airlines'
+            label='Show routs on'
+            value={airline}
+            onSelect={handleSelect('airlines', 'airline', setAirline)}
+          />
+          <Select
+            options={routeRows}
+            valueKeys={['src', 'dest']}
+            titleKey='airport'
+            label='Show routs on'
+            value={airport}
+            onSelect={handleSelect('airports', ['src', 'dest'], setAirport)}
+          />
+          <button onClick={clearFilter}>Show All Routes</button>
         </form>
         <Table className='routes-table' columns={columns} rows={rowsToDisplay} format={formatValue} />
         <Paginator state={pageState} dispatch={pageDispatch} />
