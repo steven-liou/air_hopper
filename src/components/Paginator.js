@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 const Paginator = ({state, dispatch}) => {
   const [currentRowsPerPage, setCurrentRowsPerPage] = useState(state.rowsPerPage);
   const {startRow, endRow, totalRows, page, totalPages} = state;
+
   return (
     <div>
       <Message startRow={startRow} endRow={endRow} totalRows={totalRows} />

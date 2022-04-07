@@ -84,6 +84,7 @@ const App = () => {
         <form>
           <Select
             options={routeRows}
+            filteredOptions={filteredRows}
             valueKeys={['airline']}
             titleKey='airlines'
             label='Show routs on'
@@ -92,6 +93,7 @@ const App = () => {
           />
           <Select
             options={routeRows}
+            filteredOptions={filteredRows}
             valueKeys={['src', 'dest']}
             titleKey='airport'
             label='Show routs on'
