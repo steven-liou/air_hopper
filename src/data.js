@@ -1512,4 +1512,12 @@ const getAirportByCode = (code) => {
   return airports.find((airport) => airport.code === code);
 };
 
-export default {routes, airlines, airports, getAirlineById, getAirportByCode};
+const routesInReadableFormat = (routes) => {
+  return routes.map((route) => [
+    getAirlineById(route.airline).name,
+    getAirportByCode(route.src).name,
+    getAirportByCode(route.dest).name,
+  ]);
+};
+
+export default {routes, airlines, airports, getAirlineById, getAirportByCode, routesInReadableFormat};
