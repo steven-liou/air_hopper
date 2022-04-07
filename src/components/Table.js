@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import data from '../data';
 const {getAirlineById, getAirportByCode} = data;
 
-const Table = ({columns, rows, format}) => {
+const Table = ({columns, rows, format, columnHeaders}) => {
   return (
     <table>
       <thead>
@@ -14,7 +14,7 @@ const Table = ({columns, rows, format}) => {
       </thead>
       <tbody>
         {rows.map((row, index) => {
-          return <TableRow key={index} cols={row} />;
+          return <TableRow key={index} cols={row} columnHeaders={columns.map((col) => col.property)} />;
         })}
       </tbody>
     </table>
@@ -23,12 +23,12 @@ const Table = ({columns, rows, format}) => {
 
 const ColumnHeader = ({name}) => <th scope='col'>{name}</th>;
 
-const TableRow = ({cols}) => {
+const TableRow = ({cols, columnHeaders}) => {
   return (
     <tr>
-      <th scope='row'>{cols[0]}</th>
-      {cols.slice(1).map((col, index) => (
-        <td key={index}>{col}</td>
+      <th scope='row'>{cols[columnHeaders[0]]}</th>
+      {columnHeaders.slice(1).map((label, index) => (
+        <td key={index}>{cols[label]}</td>
       ))}
     </tr>
   );

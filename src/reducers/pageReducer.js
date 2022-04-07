@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState} from 'react';
 
 const initialState = {
   page: 0,
@@ -31,6 +31,8 @@ const reducer = (state = initialState, action) => {
       const rowsPerPage = action.payload;
       endRow = state.startRow + rowsPerPage;
       return {...state, endRow, rowsPerPage};
+    case 'SET_TOTAL_ROWS':
+      return {...state, totalRows: action.payload};
     default:
       return state;
   }

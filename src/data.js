@@ -1513,11 +1513,11 @@ const getAirportByCode = (code) => {
 };
 
 const routesInReadableFormat = (routes) => {
-  return routes.map((route) => [
-    getAirlineById(route.airline).name,
-    getAirportByCode(route.src).name,
-    getAirportByCode(route.dest).name,
-  ]);
+  return routes.map((route) => ({
+    airline: getAirlineById(route.airline).name,
+    src: getAirportByCode(route.src).name,
+    dest: getAirportByCode(route.dest).name,
+  }));
 };
 
 export default {routes, airlines, airports, getAirlineById, getAirportByCode, routesInReadableFormat};
