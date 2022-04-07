@@ -1517,6 +1517,10 @@ const routesInReadableFormat = (routes) => {
     airline: getAirlineById(route.airline).name,
     src: getAirportByCode(route.src).name,
     dest: getAirportByCode(route.dest).name,
+    srcLong: getAirportByCode(route.src).long,
+    srcLat: getAirportByCode(route.src).lat,
+    destLong: getAirportByCode(route.dest).long,
+    destLat: getAirportByCode(route.dest).lat,
   }));
 };
 

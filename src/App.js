@@ -3,6 +3,7 @@ import './App.css';
 import Table from './components/Table';
 import Paginator from './components/Paginator';
 import Select from './components/Select';
+import Map from './components/Map';
 
 import data from './data';
 import pageReducer from './reducers/pageReducer';
@@ -80,6 +81,9 @@ const App = () => {
       <header className='header'>
         <h1 className='title'>Airline Routes</h1>
       </header>
+      <section>
+        <Map routes={filteredRows} />
+      </section>
       <section>
         <form>
           <Select
