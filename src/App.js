@@ -82,7 +82,7 @@ const App = () => {
         <h1 className='title'>Airline Routes</h1>
       </header>
       <section>
-        <Map routes={filteredRows} />
+        <Map routes={filteredRows} dispatch={filterRowsDispatch} setAirport={setAirport} />
       </section>
       <section>
         <form>

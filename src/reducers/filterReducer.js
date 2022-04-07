@@ -7,6 +7,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  console.log(state.filters);
   let filters = state.filters.slice();
   let filteredData = state.data.slice();
   switch (action.type) {
